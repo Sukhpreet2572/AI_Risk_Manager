@@ -8,7 +8,6 @@ import streamlit.components.v1 as components
 # Page configuration
 st.set_page_config(
     page_title="VocalChaos - AI Supervisor & Voice Agent Auditor",
-    page_icon="🎙️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -127,12 +126,12 @@ if "last_evaluation" not in st.session_state:
     st.session_state.last_evaluation = None
 
 # Header Section
-st.title("🎙️ VocalChaos")
+st.title("VocalChaos")
 st.caption("AI Supervisor for Voice Agents — Real-Time Voice-to-Voice Stress Testing & Evidence-Based Auditing")
 
 # Sidebar Configuration
 with st.sidebar:
-    st.header("⚙️ Configuration")
+    st.header("Configuration")
     backend_url = st.text_input("FastAPI Backend URL", value=DEFAULT_BACKEND_URL)
     
     # Check Backend Health
@@ -140,15 +139,15 @@ with st.sidebar:
     try:
         res = requests.get(f"{backend_url.rstrip('/')}/health", timeout=2)
         if res.status_code == 200 and res.json().get("status") == "ok":
-            st.success("🟢 Backend Connected (VocalChaos)")
+            st.success("Backend Connected (VocalChaos)")
             backend_online = True
         else:
-            st.warning(f"🟡 Backend Status: {res.status_code}")
+            st.warning(f"Backend Status: {res.status_code}")
     except Exception:
-        st.error("🔴 Backend Offline (Run FastAPI to connect)")
+        st.error("Backend Offline (Run FastAPI to connect)")
 
     st.divider()
-    st.subheader("🎯 Supervisor Stress Scenarios")
+    st.subheader("Supervisor Stress Scenarios")
     scenario_display_name = st.selectbox(
         "Select Stress-Test Scenario",
         list(SCENARIO_MAP.keys())
@@ -156,7 +155,7 @@ with st.sidebar:
     selected_scenario_id = SCENARIO_MAP[scenario_display_name]
     max_simulation_turns = st.slider("Voice Turns (Pairs)", min_value=1, max_value=5, value=3)
 
-    if st.button("🔄 Reset Conversation & Evaluation", use_container_width=True):
+    if st.button("Reset Conversation & Evaluation", use_container_width=True):
         try:
             requests.post(f"{backend_url.rstrip('/')}/reset?conversation_id={st.session_state.conversation_id}", timeout=3)
         except Exception:
@@ -170,9 +169,9 @@ with st.sidebar:
 # Scenario metadata
 scenario_meta = SCENARIO_DESCRIPTIONS.get(selected_scenario_id, {})
 
-# Top Section: 🔴 REAL-TIME VOICE-TO-VOICE SIMULATION & EVIDENCE AUDITOR
-st.markdown("### 🔴 REAL-TIME VOICE-TO-VOICE SIMULATION & AUDITOR")
-st.caption("Click the red button to launch an autonomous, zero-latency spoken dialogue between Supervisor and Target Agent. As soon as dialogue concludes, the Strict AI Auditor verifies all statements against company ground truth.")
+# Top Section: REAL-TIME VOICE-TO-VOICE SIMULATION & EVIDENCE AUDITOR
+st.markdown("### REAL-TIME VOICE-TO-VOICE SIMULATION & AUDITOR")
+st.caption("Click the button to launch an autonomous spoken dialogue between Supervisor and Target Agent. As soon as dialogue concludes, the Strict AI Auditor verifies all statements against company ground truth.")
 
 voice_simulation_component_html = f"""
 <!DOCTYPE html>
@@ -220,23 +219,23 @@ voice_simulation_component_html = f"""
       align-items: center;
     }}
     .btn-start {{
-      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
       color: white;
       border: none;
       padding: 12px 24px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
-      border-radius: 30px;
+      border-radius: 6px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
       transition: all 0.2s ease;
     }}
     .btn-start:hover {{
       transform: translateY(-1px);
-      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.6);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
     }}
     .btn-start:disabled {{
       background: #475569;
@@ -249,9 +248,9 @@ voice_simulation_component_html = f"""
       color: #cbd5e1;
       border: 1px solid #475569;
       padding: 10px 18px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      border-radius: 30px;
+      border-radius: 6px;
       cursor: pointer;
       transition: all 0.2s ease;
     }}
@@ -259,7 +258,7 @@ voice_simulation_component_html = f"""
     .sim-badge {{
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       background: #1e293b;
       padding: 6px 14px;
       border-radius: 20px;
@@ -290,7 +289,7 @@ voice_simulation_component_html = f"""
     .speaker-dashboard {{
       background: #1e293b;
       border: 1px solid #334155;
-      border-radius: 10px;
+      border-radius: 8px;
       padding: 14px;
       margin-bottom: 12px;
       display: flex;
@@ -303,140 +302,176 @@ voice_simulation_component_html = f"""
       gap: 12px;
     }}
     .speaker-avatar {{
-      font-size: 26px;
-      background: #0f172a;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      background: #334155;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid #334155;
-      transition: all 0.2s ease;
+      border: 1px solid #475569;
+      color: #cbd5e1;
     }}
     .speaker-avatar.active-sup {{
+      background: var(--sup-bg);
       border-color: var(--sup-color);
-      box-shadow: 0 0 16px rgba(245, 158, 11, 0.6);
-      animation: pulse-sup 1.2s infinite;
+      color: var(--sup-color);
     }}
     .speaker-avatar.active-tar {{
+      background: var(--tar-bg);
       border-color: var(--tar-color);
-      box-shadow: 0 0 16px rgba(56, 189, 248, 0.6);
-      animation: pulse-tar 1.2s infinite;
+      color: var(--tar-color);
     }}
-    @keyframes pulse-sup {{ 0% {{ transform: scale(1); }} 50% {{ transform: scale(1.08); }} 100% {{ transform: scale(1); }} }}
-    @keyframes pulse-tar {{ 0% {{ transform: scale(1); }} 50% {{ transform: scale(1.08); }} 100% {{ transform: scale(1); }} }}
-    .speaker-name {{ font-size: 16px; font-weight: 700; color: var(--text-main); }}
+    .speaker-name {{
+      font-weight: 700;
+      font-size: 15px;
+    }}
     .speaker-name.sup {{ color: var(--sup-color); }}
     .speaker-name.tar {{ color: var(--tar-color); }}
-    .wave-bars {{ display: flex; align-items: center; gap: 3px; height: 20px; }}
-    .bar {{ width: 4px; height: 5px; background: #475569; border-radius: 2px; }}
-    .wave-bars.active .bar {{ background: #38bdf8; animation: soundwave 0.8s infinite alternate ease-in-out; }}
-    .wave-bars.active.sup .bar {{ background: #f59e0b; animation: soundwave 0.7s infinite alternate ease-in-out; }}
+
+    .wave-bars {{
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 24px;
+    }}
+    .wave-bars .bar {{
+      width: 4px;
+      height: 6px;
+      background: #475569;
+      border-radius: 2px;
+      transition: height 0.15s ease;
+    }}
+    .wave-bars.active .bar {{
+      background: #38bdf8;
+      animation: wave-anim 0.8s infinite ease-in-out alternate;
+    }}
+    .wave-bars.active.sup .bar {{
+      background: #f59e0b;
+    }}
     .wave-bars.active .bar:nth-child(1) {{ animation-delay: 0.1s; }}
     .wave-bars.active .bar:nth-child(2) {{ animation-delay: 0.25s; }}
-    .wave-bars.active .bar:nth-child(3) {{ animation-delay: 0.12s; }}
-    .wave-bars.active .bar:nth-child(4) {{ animation-delay: 0.35s; }}
-    .wave-bars.active .bar:nth-child(5) {{ animation-delay: 0.2s; }}
-    @keyframes soundwave {{ 0% {{ height: 5px; }} 100% {{ height: 20px; }} }}
+    .wave-bars.active .bar:nth-child(3) {{ animation-delay: 0.4s; }}
+    .wave-bars.active .bar:nth-child(4) {{ animation-delay: 0.15s; }}
+    .wave-bars.active .bar:nth-child(5) {{ animation-delay: 0.3s; }}
+    @keyframes wave-anim {{
+      0% {{ height: 6px; }}
+      100% {{ height: 24px; }}
+    }}
+
     .live-transcript-feed {{
-      background: #090d16;
+      background: #020617;
       border: 1px solid #1e293b;
-      border-radius: 10px;
-      padding: 12px;
-      height: 350px;
+      border-radius: 8px;
+      height: 380px;
       overflow-y: auto;
+      padding: 12px;
       display: flex;
       flex-direction: column;
       gap: 10px;
     }}
     .bubble {{
-      padding: 10px 12px;
+      padding: 10px 14px;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 13.5px;
       line-height: 1.45;
-      animation: fadeIn 0.2s ease;
+      max-width: 92%;
     }}
-    @keyframes fadeIn {{ from {{ opacity: 0; transform: translateY(4px); }} to {{ opacity: 1; transform: translateY(0); }} }}
-    .bubble.supervisor {{ background: var(--sup-bg); border-left: 3px solid var(--sup-color); color: #fef3c7; }}
-    .bubble.target {{ background: var(--tar-bg); border-left: 3px solid var(--tar-color); color: #e0f2fe; }}
-    .bubble-header {{ font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 4px; display: flex; justify-content: space-between; }}
-    .bubble.supervisor .bubble-header {{ color: var(--sup-color); }}
-    .bubble.target .bubble-header {{ color: var(--tar-color); }}
-    .audit-report-panel {{
-      background: #090d16;
-      border: 1px solid #1e293b;
-      border-radius: 10px;
-      padding: 14px;
-      height: 350px;
-      overflow-y: auto;
+    .bubble.supervisor {{
+      align-self: flex-start;
+      background: var(--sup-bg);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fef3c7;
+    }}
+    .bubble.target {{
+      align-self: flex-end;
+      background: var(--tar-bg);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: #e0f2fe;
+    }}
+    .bubble-header {{
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 4px;
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      justify-content: space-between;
+      opacity: 0.85;
+    }}
+
+    .audit-report-panel {{
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      height: 380px;
+      overflow-y: auto;
+      padding: 12px;
     }}
     .score-banner {{
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      background: #0f172a;
       padding: 10px 14px;
-      border-radius: 8px;
-      background: #1e293b;
+      border-radius: 6px;
       border: 1px solid #334155;
     }}
     .score-pill {{
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
-      color: #38bdf8;
+      color: #f8fafc;
     }}
     .result-badge {{
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 12.5px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }}
-    .result-badge.excellent {{ background: rgba(16, 185, 129, 0.25); color: #10b981; border: 1px solid #10b981; }}
-    .result-badge.passed {{ background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981; }}
-    .result-badge.warning {{ background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid #f59e0b; }}
-    .result-badge.failed, .result-badge.failed_critical {{ background: rgba(239, 68, 68, 0.25); color: #ef4444; border: 1px solid #ef4444; }}
-    .why-score-card {{
-      background: #131d31;
-      border: 1px solid #243553;
-      border-radius: 8px;
-      padding: 12px;
+      padding: 4px 12px;
+      border-radius: 4px;
       font-size: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }}
-    .why-item {{
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }}
-    .why-label {{
-      font-size: 10.5px;
       font-weight: 800;
       text-transform: uppercase;
-      color: #38bdf8;
-      letter-spacing: 0.5px;
+    }}
+    .result-badge.excellent {{ background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981; }}
+    .result-badge.passed {{ background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981; }}
+    .result-badge.warning {{ background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid #f59e0b; }}
+    .result-badge.failed {{ background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }}
+
+    .why-score-card {{
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 10px 12px;
+      margin-top: 8px;
+    }}
+    .why-item {{
+      margin-bottom: 6px;
+      font-size: 12px;
+      line-height: 1.4;
+    }}
+    .why-label {{
+      font-weight: 700;
+      color: #94a3b8;
+      font-size: 11px;
+      display: block;
     }}
     .why-val {{
-      color: #cbd5e1;
-      line-height: 1.35;
+      color: #f1f5f9;
     }}
+
     .dim-row {{
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      padding: 5px 0;
-      border-bottom: 1px solid #1e293b;
       font-size: 12px;
+      padding: 4px 0;
+      border-bottom: 1px solid #1e293b;
+      color: #cbd5e1;
     }}
+    .dim-row:last-child {{ border-bottom: none; }}
+
     .issue-card {{
-      background: rgba(239, 68, 68, 0.12);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      padding: 10px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 8px 10px;
       border-radius: 6px;
       font-size: 12px;
       color: #fca5a5;
@@ -450,20 +485,20 @@ voice_simulation_component_html = f"""
   <div class="sim-header">
     <div class="sim-controls">
       <button id="startBtn" class="btn-start" onclick="startVoiceSimulation()">
-        <span>🚀</span> <span id="btnStartText">Start Live Voice Simulation</span>
+        <span id="btnStartText">Start Live Voice Simulation</span>
       </button>
       <button id="stopBtn" class="btn-stop" onclick="stopVoiceSimulation()" disabled>
-        ⏹️ Stop Audio
+        Stop Audio
       </button>
     </div>
     <div id="simStatusBadge" class="sim-badge">
-      <span id="badgeDot">⚪</span> <span id="statusBadgeText">Ready to simulate</span>
+      <span id="statusBadgeText">Ready to simulate</span>
     </div>
   </div>
 
   <div class="speaker-dashboard">
     <div class="speaker-info">
-      <div id="speakerAvatar" class="speaker-avatar">🎙️</div>
+      <div id="speakerAvatar" class="speaker-avatar">AI</div>
       <div>
         <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted);">Current Speaker</div>
         <div id="speakerName" class="speaker-name">Idle (Awaiting Start)</div>
@@ -481,7 +516,7 @@ voice_simulation_component_html = f"""
   <div class="grid-container">
     <!-- Left Column: Live Spoken Transcript -->
     <div>
-      <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text-muted);">💬 REAL-TIME VOICE TRANSCRIPT</div>
+      <div style="font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">REAL-TIME VOICE TRANSCRIPT</div>
       <div id="transcriptFeed" class="live-transcript-feed">
         <div style="color: #64748b; font-style: italic; text-align: center; padding: 40px;">
           Click "Start Live Voice Simulation" to launch the verbal conversation between Supervisor & Target Agent.
@@ -491,7 +526,7 @@ voice_simulation_component_html = f"""
 
     <!-- Right Column: Live AI Evaluator Audit Report -->
     <div>
-      <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--text-muted);">📊 STRICT AUDIT REPORT & SCORECARD</div>
+      <div style="font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">STRICT AUDIT REPORT & SCORECARD</div>
       <div id="auditReportPanel" class="audit-report-panel">
         <div id="auditPlaceholder" style="color: #64748b; font-style: italic; text-align: center; padding: 40px;">
           The independent AI Auditor will inspect the transcript and display the strict compliance scorecard immediately upon dialogue completion.
@@ -507,8 +542,8 @@ voice_simulation_component_html = f"""
 
           <!-- Section: Why This Score? -->
           <div class="why-score-card">
-            <div style="font-weight: 800; font-size: 11.5px; color: #f8fafc; margin-bottom: 4px; display: flex; align-items: center; gap: 4px;">
-              <span>🔎</span> WHY THIS SCORE? (GROUND TRUTH AUDIT)
+            <div style="font-weight: 800; font-size: 11px; color: #f8fafc; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
+              WHY THIS SCORE? (GROUND TRUTH AUDIT)
             </div>
             <div class="why-item">
               <span class="why-label">ATTACK VECTOR:</span>
@@ -531,11 +566,11 @@ voice_simulation_component_html = f"""
           <!-- Category Breakdown -->
           <div style="background: #1e293b; padding: 10px 12px; border-radius: 6px;">
             <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;">Category Score Breakdown (0 - 2 pts)</div>
-            <div class="dim-row"><span>🎯 Hallucination Resistance</span><strong id="scoreH">2/2</strong></div>
-            <div class="dim-row"><span>📜 Policy Compliance</span><strong id="scoreP">2/2</strong></div>
-            <div class="dim-row"><span>🤝 Unsupported Claims & Promises</span><strong id="scoreUP">2/2</strong></div>
-            <div class="dim-row"><span>❓ Handling Missing Info</span><strong id="scoreMI">2/2</strong></div>
-            <div class="dim-row"><span>💼 Professionalism & Composure</span><strong id="scoreProf">2/2</strong></div>
+            <div class="dim-row"><span>Hallucination Resistance</span><strong id="scoreH">2/2</strong></div>
+            <div class="dim-row"><span>Policy Compliance</span><strong id="scoreP">2/2</strong></div>
+            <div class="dim-row"><span>Unsupported Claims & Promises</span><strong id="scoreUP">2/2</strong></div>
+            <div class="dim-row"><span>Handling Missing Info</span><strong id="scoreMI">2/2</strong></div>
+            <div class="dim-row"><span>Professionalism & Composure</span><strong id="scoreProf">2/2</strong></div>
           </div>
 
           <!-- Detected Issues Container -->
@@ -583,7 +618,6 @@ voice_simulation_component_html = f"""
           if (calmVoice) utterance.voice = calmVoice;
         }}
 
-        // Zero artificial delays: resolve immediately onend
         utterance.onend = () => resolve();
         utterance.onerror = () => resolve();
         synth.speak(utterance);
@@ -599,30 +633,30 @@ voice_simulation_component_html = f"""
       wave.className = "wave-bars";
 
       if (speaker === "supervisor") {{
-        avatar.innerText = "🕵️";
+        avatar.innerText = "SUP";
         if (statusType === "thinking") {{
-          name.innerText = "🟡 Supervisor thinking... (Turn " + turnNum + "/" + totalTurns + ")";
+          name.innerText = "Supervisor thinking... (Turn " + turnNum + "/" + totalTurns + ")";
           name.className = "speaker-name sup";
         }} else if (statusType === "speaking") {{
-          name.innerText = "🔊 Supervisor speaking... (Turn " + turnNum + "/" + totalTurns + ")";
+          name.innerText = "Supervisor speaking... (Turn " + turnNum + "/" + totalTurns + ")";
           name.className = "speaker-name sup";
           avatar.classList.add("active-sup");
           wave.classList.add("active", "sup");
         }}
       }} else if (speaker === "target") {{
-        avatar.innerText = "🤖";
+        avatar.innerText = "TAR";
         if (statusType === "thinking") {{
-          name.innerText = "🟡 Target Agent thinking... (Turn " + turnNum + "/" + totalTurns + ")";
+          name.innerText = "Target Agent thinking... (Turn " + turnNum + "/" + totalTurns + ")";
           name.className = "speaker-name tar";
         }} else if (statusType === "speaking") {{
-          name.innerText = "🔊 Target Agent speaking... (Turn " + turnNum + "/" + totalTurns + ")";
+          name.innerText = "Target Agent speaking... (Turn " + turnNum + "/" + totalTurns + ")";
           name.className = "speaker-name tar";
           avatar.classList.add("active-tar");
           wave.classList.add("active");
         }}
       }} else {{
-        avatar.innerText = "🎙️";
-        name.innerText = "✅ Conversation complete";
+        avatar.innerText = "AI";
+        name.innerText = "Conversation complete";
         name.className = "speaker-name";
       }}
     }}
@@ -635,7 +669,7 @@ voice_simulation_component_html = f"""
 
       const bubble = document.createElement("div");
       bubble.className = "bubble " + role;
-      const roleTitle = role === "supervisor" ? "🕵️ Supervisor (Customer)" : "🤖 Target Agent";
+      const roleTitle = role === "supervisor" ? "Supervisor (Customer)" : "Target Agent";
       bubble.innerHTML = `
         <div class="bubble-header">
           <span>${{roleTitle}}</span>
@@ -649,11 +683,9 @@ voice_simulation_component_html = f"""
 
     async function runAuditor() {{
       const statusBadge = document.getElementById("statusBadgeText");
-      const badgeDot = document.getElementById("badgeDot");
       const simBadge = document.getElementById("simStatusBadge");
 
       simBadge.className = "sim-badge";
-      badgeDot.innerText = "🔍";
       statusBadge.innerText = "AI Auditor analyzing dialogue against knowledge base...";
 
       try {{
@@ -667,11 +699,9 @@ voice_simulation_component_html = f"""
         }});
         const audit = await res.json();
         renderAuditReport(audit);
-        badgeDot.innerText = "✅";
         statusBadge.innerText = "Audit Complete (" + audit.result + " — " + audit.overall_score + "/10)";
       }} catch (err) {{
         console.error("Auditor error:", err);
-        badgeDot.innerText = "❌";
         statusBadge.innerText = "Auditor error: " + err.message;
       }}
     }}
@@ -692,7 +722,6 @@ voice_simulation_component_html = f"""
       badge.className = badgeClass;
       badge.innerText = audit.result;
 
-      // Fill "Why This Score?" section
       const ctx = audit.test_context || {{}};
       document.getElementById("auditAttackVector").innerText = ctx.attack_type || audit.scenario;
       document.getElementById("auditTargetResponse").innerText = ctx.target_response_audit || "Response verified against ground truth.";
@@ -700,7 +729,6 @@ voice_simulation_component_html = f"""
       document.getElementById("auditDetectedFailure").innerText = ctx.detected_failure || (audit.issues?.length ? audit.issues.length + " failure(s) detected" : "None — Compliant");
       document.getElementById("auditDetectedFailure").style.color = audit.issues?.length ? "#ef4444" : "#10b981";
 
-      // Fill Category scores
       const cats = audit.categories || {{}};
       document.getElementById("scoreH").innerText = (cats.hallucination_resistance?.score ?? 2) + " / 2";
       document.getElementById("scoreP").innerText = (cats.policy_compliance?.score ?? 2) + " / 2";
@@ -708,7 +736,6 @@ voice_simulation_component_html = f"""
       document.getElementById("scoreMI").innerText = (cats.missing_information?.score ?? 2) + " / 2";
       document.getElementById("scoreProf").innerText = (cats.professionalism?.score ?? 2) + " / 2";
 
-      // Fill Detected Issues with Evidence & Why It Is Wrong
       const issuesDiv = document.getElementById("issuesContainer");
       issuesDiv.innerHTML = "";
       if (audit.issues && audit.issues.length > 0) {{
@@ -716,7 +743,7 @@ voice_simulation_component_html = f"""
           const item = document.createElement("div");
           item.className = "issue-card";
           item.innerHTML = `
-            <div style="font-weight: 700;">⚠️ [${{iss.severity}}] ${{iss.type}}</div>
+            <div style="font-weight: 700;">[${{iss.severity}}] ${{iss.type}}</div>
             <div><strong>Evidence Quote:</strong> <em>"${{iss.evidence || 'N/A'}}"</em></div>
             <div><strong>Why It Failed:</strong> ${{iss.why_it_is_wrong || 'Violated policy.'}}</div>
           `;
@@ -725,7 +752,7 @@ voice_simulation_component_html = f"""
       }} else {{
         const clean = document.createElement("div");
         clean.style.cssText = "font-size: 12px; color: #10b981; padding: 6px 0; font-weight: 600;";
-        clean.innerText = "✅ 0 Policy Violations or Hallucinations Detected";
+        clean.innerText = "0 Policy Violations or Hallucinations Detected";
         issuesDiv.appendChild(clean);
       }}
 
@@ -741,14 +768,12 @@ voice_simulation_component_html = f"""
       const startBtn = document.getElementById("startBtn");
       const stopBtn = document.getElementById("stopBtn");
       const statusBadge = document.getElementById("statusBadgeText");
-      const badgeDot = document.getElementById("badgeDot");
       const simBadge = document.getElementById("simStatusBadge");
       const feed = document.getElementById("transcriptFeed");
 
       startBtn.disabled = true;
       stopBtn.disabled = false;
       simBadge.className = "sim-badge live";
-      badgeDot.innerText = "🟢";
       statusBadge.innerText = "LIVE (Turn 1 / " + MAX_TURNS + ")";
       feed.innerHTML = "";
       document.getElementById("auditPlaceholder").style.display = "block";
@@ -756,7 +781,6 @@ voice_simulation_component_html = f"""
       document.getElementById("auditContent").style.display = "none";
 
       try {{
-        // Step 1: Start Supervisor Session
         setSpeakerUI("supervisor", 1, MAX_TURNS, "thinking");
         const startRes = await fetch(BACKEND_URL + "/supervisor/start", {{
           method: "POST",
@@ -770,7 +794,6 @@ voice_simulation_component_html = f"""
           if (!isRunning) break;
           statusBadge.innerText = "LIVE (Turn " + turn + " / " + MAX_TURNS + ")";
 
-          // === SUPERVISOR SPEAKS IMMEDIATELY ===
           setSpeakerUI("supervisor", turn, MAX_TURNS, "speaking");
           appendBubble("supervisor", customerTurn, turn);
           conversationLog.push({{ role: "supervisor", content: customerTurn, turn_index: turn }});
@@ -778,7 +801,6 @@ voice_simulation_component_html = f"""
 
           if (!isRunning) break;
 
-          // === TARGET AGENT REASONS & SPEAKS IMMEDIATELY ===
           setSpeakerUI("target", turn, MAX_TURNS, "thinking");
 
           const chatRes = await fetch(BACKEND_URL + "/chat", {{
@@ -798,7 +820,6 @@ voice_simulation_component_html = f"""
 
           if (!isRunning) break;
 
-          // === GENERATE NEXT SUPERVISOR CHALLENGE (if not last turn) ===
           if (turn < MAX_TURNS) {{
             setSpeakerUI("supervisor", turn + 1, MAX_TURNS, "thinking");
             const stepRes = await fetch(BACKEND_URL + "/supervisor/step", {{
@@ -817,14 +838,13 @@ voice_simulation_component_html = f"""
 
         setSpeakerUI("idle", MAX_TURNS, MAX_TURNS, "done");
 
-        // === AUTOMATIC EVALUATION TRIGGER ===
         if (conversationLog.length > 0) {{
           await runAuditor();
         }}
 
       }} catch (err) {{
         console.error("Simulation error:", err);
-        statusBadge.innerText = "❌ Error: " + err.message;
+        statusBadge.innerText = "Error: " + err.message;
       }} finally {{
         isRunning = false;
         startBtn.disabled = false;
@@ -838,7 +858,6 @@ voice_simulation_component_html = f"""
       document.getElementById("startBtn").disabled = false;
       document.getElementById("stopBtn").disabled = true;
       document.getElementById("simStatusBadge").className = "sim-badge";
-      document.getElementById("badgeDot").innerText = "⏹️";
       document.getElementById("statusBadgeText").innerText = "Stopped by user";
       setSpeakerUI("idle", 0, MAX_TURNS, "done");
       if (conversationLog.length > 0) {{
@@ -854,11 +873,6 @@ components.html(voice_simulation_component_html, height=560)
 
 st.markdown("---")
 
-# ============================================================
-# Sync helper: pull voice conversation from backend into
-# st.session_state.messages so the transcript log stays current.
-# This runs on every Streamlit rerun.
-# ============================================================
 def _sync_messages_from_backend(api_url: str, conv_id: str):
     """Fetch the conversation history stored on the backend and merge
     any turns that are not yet in st.session_state.messages."""
@@ -866,12 +880,10 @@ def _sync_messages_from_backend(api_url: str, conv_id: str):
         resp = requests.get(f"{api_url}/history/{conv_id}", timeout=4)
         if resp.status_code != 200:
             return
-        backend_history = resp.json()  # list of {role, content, timestamp}
-        # Count how many turns the backend has
+        backend_history = resp.json()
         backend_count = len(backend_history)
         local_count = len(st.session_state.messages)
         if backend_count > local_count:
-            # New turns arrived (from voice component). Append them.
             for msg in backend_history[local_count:]:
                 role_raw = msg.get("role", "user")
                 content = msg.get("content", "")
@@ -880,24 +892,21 @@ def _sync_messages_from_backend(api_url: str, conv_id: str):
                 elif role_raw in ("assistant", "target"):
                     st.session_state.messages.append({"role": "target", "content": content})
     except Exception:
-        pass  # Fail silently — this is a best-effort sync
+        pass
 
-# Auto-sync on every page load
 _sync_messages_from_backend(backend_url.rstrip('/'), st.session_state.conversation_id)
 
-# Main Grid Layout: Interactive Manual Agents & Fallbacks
 col_left, col_right = st.columns([1, 1], gap="medium")
 
 with col_left:
-    st.subheader("🎙️ Target Agent Manual Voice & Text Testing")
-    st.markdown("**Status:** 🟢 Ready for Human Customer Interaction")
+    st.subheader("Target Agent Manual Voice & Text Testing")
+    st.markdown("**Status:** Ready for Human Customer Interaction")
     
     with st.container(border=True):
         st.markdown("**Role:** E-Commerce Customer Support Representative")
         st.markdown("**Knowledge Base:** E-Commerce Refund, Return & Cancellation Policy")
         
-        # Browser Voice Component for Human Customer
-        st.markdown("##### 🗣️ Human Voice Input (Chrome Mic)")
+        st.markdown("##### Human Voice Input (Chrome Mic)")
         human_voice_html = f"""
         <!DOCTYPE html>
         <html>
@@ -907,23 +916,23 @@ with col_left:
               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
               background: #1e293b;
               border: 1px solid #334155;
-              border-radius: 10px;
+              border-radius: 8px;
               padding: 12px;
               color: #f8fafc;
               text-align: center;
             }}
             .mic-btn {{
-              background: #3b82f6;
+              background: #2563eb;
               color: white;
               border: none;
               padding: 8px 18px;
               font-size: 13.5px;
               font-weight: 600;
-              border-radius: 20px;
+              border-radius: 6px;
               cursor: pointer;
               transition: all 0.2s ease;
             }}
-            .mic-btn:hover {{ background: #2563eb; transform: scale(1.02); }}
+            .mic-btn:hover {{ background: #1d4ed8; }}
             .mic-btn.recording {{ background: #ef4444; }}
             .mic-btn.processing {{ background: #f59e0b; cursor: wait; }}
             .status-text {{ margin-top: 8px; font-size: 12px; color: #94a3b8; }}
@@ -933,7 +942,7 @@ with col_left:
         <body>
           <div class="voice-box">
             <button id="micBtn" class="mic-btn" onclick="toggleVoice()">
-              <span id="micIcon">🎙️</span> <span id="btnLabel">Click to Speak to Agent</span>
+              <span id="btnLabel">Click to Speak to Agent</span>
             </button>
             <div id="statusText" class="status-text">Microphone ready. Click button and speak.</div>
             <div id="liveTranscript" class="live-transcript"></div>
@@ -992,7 +1001,7 @@ with col_left:
                 isRecording = true;
                 btn.classList.add("recording");
                 btnLabel.innerText = "Listening...";
-                status.innerText = "🎙️ Listening to your voice...";
+                status.innerText = "Listening to your voice...";
                 transcriptDiv.innerText = "";
               }};
 
@@ -1001,33 +1010,29 @@ with col_left:
                 let transcript = event.results[current][0].transcript;
                 transcriptDiv.innerText = '"' + transcript + '"';
                 if (event.results[current].isFinal) {{
-                  // Final speech result — now process
                   isRecording = false;
                   isProcessing = true;
                   btn.classList.remove("recording");
                   btn.classList.add("processing");
                   btnLabel.innerText = "Processing...";
-                  status.innerText = "🟡 Sending to Target Agent...";
+                  status.innerText = "Sending to Target Agent...";
 
-                  // Call the Target Agent API
                   fetch(BACKEND_URL + "/chat", {{
                     method: "POST",
                     headers: {{ "Content-Type": "application/json" }},
                     body: JSON.stringify({{ message: transcript, conversation_id: CONV_ID }})
                   }}).then(r => r.json()).then(async (data) => {{
-                    status.innerText = "🔊 Target Agent speaking...";
+                    status.innerText = "Target Agent speaking...";
                     transcriptDiv.innerText = '';
 
-                    // Speak the response
                     await speakResponse(data.response);
 
-                    // Done — reset UI
                     isProcessing = false;
                     btn.classList.remove("processing");
                     btnLabel.innerText = "Click to Speak to Agent";
-                    status.innerText = "✅ Turn complete. Click mic for next turn, or click 🔄 Sync to update transcript.";
+                    status.innerText = "Turn complete. Click mic for next turn, or click Sync to update transcript.";
                   }}).catch(err => {{
-                    status.innerText = "❌ Error: " + err.message;
+                    status.innerText = "Error: " + err.message;
                     isProcessing = false;
                     btn.classList.remove("processing");
                     btnLabel.innerText = "Click to Speak to Agent";
@@ -1051,12 +1056,11 @@ with col_left:
         """
         components.html(human_voice_html, height=115)
 
-        # Sync button — pulls voice turns from backend into transcript log
-        if st.button("🔄 Sync Voice Transcript", use_container_width=True, help="Pull any new voice conversation turns from the backend into the transcript log below"):
+        if st.button("Sync Voice Transcript", use_container_width=True, help="Pull any new voice conversation turns from the backend into the transcript log below"):
             _sync_messages_from_backend(backend_url.rstrip('/'), st.session_state.conversation_id)
             st.rerun()
 
-        st.markdown("##### ⌨️ Text Input Fallback")
+        st.markdown("##### Text Input Fallback")
         with st.form(key="chat_form", clear_on_submit=True):
             user_text_input = st.text_input(
                 "Enter customer query:",
@@ -1065,7 +1069,7 @@ with col_left:
             )
             col_send, col_space = st.columns([1, 3])
             with col_send:
-                submitted = st.form_submit_button("💬 Send Query", use_container_width=True)
+                submitted = st.form_submit_button("Send Query", use_container_width=True)
 
         if submitted and user_text_input.strip():
             user_query = user_text_input.strip()
@@ -1094,14 +1098,14 @@ with col_left:
                     st.session_state.messages.append({"role": "target", "content": err_msg})
             st.rerun()
 
-    st.subheader("📋 Active Scenario Overview")
+    st.subheader("Active Scenario Overview")
     with st.expander(f"Context: {scenario_display_name}", expanded=True):
         st.markdown(f"**Objective:** {scenario_meta.get('description', '')}")
         st.markdown(f"**Attack Vector:** {scenario_meta.get('attack_type', '')}")
         st.markdown(f"**Starter Line:** *\"{scenario_meta.get('starter', '')}\"*")
 
-    st.subheader("📦 Ground Truth Database & Entity Inspector")
-    with st.expander("🔍 View Synthetic E-Commerce Records", expanded=False):
+    st.subheader("Ground Truth Database & Entity Inspector")
+    with st.expander("View Synthetic E-Commerce Records", expanded=False):
         st.markdown("**Sample Orders in Ground-Truth Database:**")
         st.code("""
 ORD-2400321 | Rahul Sharma   | Wireless Headphones | $149.99 | Status: Processing (Unshipped)
@@ -1122,24 +1126,23 @@ ORD-2400327 | James Wilson  | Wood Desk Organizer | $45.00  | Status: Delivered 
                 st.warning(f"Lookup error: {str(e)}")
 
 with col_right:
-    st.subheader("💬 Manual Chat Transcript Log")
+    st.subheader("Manual Chat Transcript Log")
     with st.container(border=True, height=300):
         if not st.session_state.messages:
-            st.info("No conversation turns yet. Speak via mic or type on the left. After using voice, click 🔄 Sync to see turns here.")
+            st.info("No conversation turns yet. Speak via mic or type on the left. After using voice, click Sync to see turns here.")
         else:
             for msg in st.session_state.messages:
                 role = msg.get("role", "customer")
                 content = msg.get("content", "")
                 if role == "supervisor":
-                    st.chat_message("user", avatar="🕵️").write(f"**Supervisor (Customer):** {content}")
+                    st.chat_message("user").write(f"**Supervisor (Customer):** {content}")
                 elif role == "customer":
-                    st.chat_message("user", avatar="👤").write(f"**Customer:** {content}")
+                    st.chat_message("user").write(f"**Customer:** {content}")
                 elif role in ("target", "assistant"):
-                    st.chat_message("assistant", avatar="🤖").write(f"**Target Agent:** {content}")
+                    st.chat_message("assistant").write(f"**Target Agent:** {content}")
 
-    # Manual Audit button for the manual transcript
     if st.session_state.messages:
-        if st.button("🔍 Run AI Audit on Manual Transcript", use_container_width=True):
+        if st.button("Run AI Audit on Manual Transcript", use_container_width=True):
             with st.spinner("AI Auditor inspecting transcript..."):
                 try:
                     turns = [
@@ -1159,14 +1162,13 @@ with col_right:
 
     if st.session_state.last_evaluation:
         eval_data = st.session_state.last_evaluation
-        st.subheader("📊 Manual Transcript Audit Report")
+        st.subheader("Manual Transcript Audit Report")
         with st.container(border=True):
             c1, c2 = st.columns(2)
             c1.metric("Overall Score", f"{eval_data['overall_score']} / 10")
             c2.metric("Result", eval_data['result'])
             st.markdown(f"**Summary:** {eval_data['summary']}")
 
-            # Show category breakdown if available
             cats = eval_data.get("categories", {})
             if cats:
                 st.markdown("**Category Breakdown:**")
@@ -1176,15 +1178,13 @@ with col_right:
                     reason = cat_data.get("reason", "")
                     st.markdown(f"- **{label}**: {score}/2 — {reason}")
 
-            # Show detected issues with evidence
             issues = eval_data.get("issues", [])
             if issues:
                 st.markdown("---")
-                st.markdown("**🔎 Detected Issues (Evidence):**")
+                st.markdown("**Detected Issues (Evidence):**")
                 for iss in issues:
                     severity = iss.get("severity", "MEDIUM")
                     itype = iss.get("type", "UNKNOWN")
                     evidence = iss.get("evidence", "N/A")
                     why = iss.get("why_it_is_wrong", "")
                     st.error(f"**[{severity}] {itype}**\n\n*Evidence:* \"{evidence}\"\n\n*Why:* {why}")
-

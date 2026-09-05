@@ -201,7 +201,7 @@ def compile_grounded_context(entities: Dict[str, Any]) -> str:
         else:
             sections.append(
                 f"[VERIFIED GROUND TRUTH — ORDER RECORD FOR {order_id}]\n"
-                f"⚠️ ORDER '{order_id}' DOES NOT EXIST IN THE COMPANY DATABASE. IT IS NON-EXISTENT."
+                f"ORDER '{order_id}' DOES NOT EXIST IN THE COMPANY DATABASE. IT IS NON-EXISTENT."
             )
 
     # 2. Tracking Number lookup if provided separately
@@ -219,7 +219,7 @@ def compile_grounded_context(entities: Dict[str, Any]) -> str:
         else:
             sections.append(
                 f"[VERIFIED GROUND TRUTH — TRACKING RECORD FOR {tracking_number}]\n"
-                f"⚠️ TRACKING NUMBER '{tracking_number}' DOES NOT EXIST IN THE COURIER LOGISTICS DATABASE."
+                f"TRACKING NUMBER '{tracking_number}' DOES NOT EXIST IN THE COURIER LOGISTICS DATABASE."
             )
 
     # 3. Customer Profile Ground Truth
