@@ -1,7 +1,7 @@
 import logging
 import uuid
-from typing import List
-from fastapi import FastAPI, HTTPException
+from typing import List, Optional
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
@@ -26,6 +26,8 @@ from app.models.schemas import (
 from app.agents.target_agent import TargetAgent
 from app.agents.supervisor_agent import SupervisorAgent
 from app.evaluation.evaluator import Evaluator
+from app.knowledge.retriever import get_order, get_customer, get_product, get_shipment, extract_entities, compile_grounded_context
+from app.knowledge.data_loader import data_loader
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("vocalchaos.api")
@@ -77,7 +79,8 @@ async def root():
             "supervisor_start": "POST /supervisor/start",
             "supervisor_step": "POST /supervisor/step",
             "supervisor_simulate": "POST /supervisor/simulate",
-            "evaluate": "POST /evaluate"
+            "evaluate": "POST /evaluate",
+            "knowledge_lookup": "GET /knowledge/lookup"
         }
     }
 
@@ -87,7 +90,7 @@ async def root():
 @app.post("/chat", response_model=ChatResponse, tags=["Target Agent"])
 async def chat_with_target_agent(request: ChatRequest) -> ChatResponse:
     """
-    Send a customer query to the Target Voice Agent and receive a response strictly bounded by knowledge base.
+    Send a customer query to the Target Voice Agent and receive a response grounded strictly in database records & policies.
     """
     if not request.message or not request.message.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty")
@@ -109,11 +112,11 @@ async def chat_with_target_agent(request: ChatRequest) -> ChatResponse:
 
 @app.post("/reset", response_model=ResetResponse, tags=["Target Agent"])
 async def reset_conversation(conversation_id: str = "default_session") -> ResetResponse:
-    """Reset and clear conversation memory for a given session."""
+    """Reset and clear conversation memory and entity state for a given session."""
     target_agent.clear_history(conversation_id)
     return ResetResponse(
         status="ok",
-        message="Conversation history cleared",
+        message="Conversation history & entity memory cleared",
         conversation_id=conversation_id
     )
 
@@ -122,6 +125,35 @@ async def reset_conversation(conversation_id: str = "default_session") -> ResetR
 async def get_conversation_history(conversation_id: str) -> List[ConversationMessage]:
     """Retrieve message history for a specific conversation session."""
     return target_agent.get_history(conversation_id)
+
+
+# ==================== Knowledge Database Endpoints ====================
+
+@app.get("/knowledge/lookup", tags=["Knowledge Base"])
+async def lookup_ground_truth(
+    query: Optional[str] = Query(None, description="Order ID (ORD-2400321), tracking number, customer ID, or product name")
+):
+    """Lookup grounded database records (orders, products, customers, shipments) for UI inspection."""
+    if not query:
+        return {
+            "products_count": len(data_loader.products),
+            "customers_count": len(data_loader.customers),
+            "orders_count": len(data_loader.orders),
+            "shipments_count": len(data_loader.shipments),
+            "sample_orders": [o["order_id"] for o in data_loader.orders[:8]]
+        }
+
+    entities = extract_entities(query)
+    ground_truth = compile_grounded_context(entities)
+    return {
+        "query": query,
+        "extracted_entities": entities,
+        "order": get_order(entities.get("order_id")) if entities.get("order_id") else None,
+        "shipment": get_shipment(entities.get("tracking_number") or entities.get("order_id")),
+        "customer": get_customer(entities.get("customer_id") or query),
+        "product": get_product(query),
+        "ground_truth_context": ground_truth
+    }
 
 
 # ==================== Supervisor Agent Endpoints ====================
@@ -243,7 +275,7 @@ async def supervisor_simulate(request: SupervisorSimulateRequest) -> SupervisorS
 @app.post("/evaluate", response_model=EvaluateResponse, tags=["Evaluation"])
 async def evaluate_conversation(request: EvaluateRequest) -> EvaluateResponse:
     """
-    Audit and evaluate a completed conversation transcript against policies and scenario objectives.
+    Audit and evaluate a completed conversation transcript against policies, database ground truth, and scenario objectives.
     """
     if not request.conversation:
         raise HTTPException(status_code=400, detail="Conversation turns cannot be empty for evaluation")

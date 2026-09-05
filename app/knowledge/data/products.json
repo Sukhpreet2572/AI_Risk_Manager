@@ -1,0 +1,137 @@
+[
+  {
+    "product_id": "PROD-101",
+    "product_name": "Wireless Noise-Canceling Headphones",
+    "category": "Electronics",
+    "price": 149.99,
+    "stock": 42,
+    "return_window_days": 14,
+    "description": "Over-ear Bluetooth headphones with active noise cancellation and 30-hour battery life."
+  },
+  {
+    "product_id": "PROD-102",
+    "product_name": "Ergonomic Mesh Office Chair",
+    "category": "Furniture",
+    "price": 229.50,
+    "stock": 18,
+    "return_window_days": 14,
+    "description": "Adjustable lumbar support breathable mesh executive chair."
+  },
+  {
+    "product_id": "PROD-103",
+    "product_name": "Smart Fitness Watch Ultra",
+    "category": "Electronics",
+    "price": 199.00,
+    "stock": 25,
+    "return_window_days": 14,
+    "description": "Heart rate monitor, GPS tracking, sleep monitor, and waterproof rating 5ATM."
+  },
+  {
+    "product_id": "PROD-104",
+    "product_name": "Stainless Steel Thermal Water Bottle 32oz",
+    "category": "Home & Kitchen",
+    "price": 24.99,
+    "stock": 110,
+    "return_window_days": 14,
+    "description": "Double-wall vacuum insulated water flask keeps drinks cold 24h / hot 12h."
+  },
+  {
+    "product_id": "PROD-105",
+    "product_name": "Organic Cotton Bed Sheet Set (Queen)",
+    "category": "Home & Bedding",
+    "price": 79.99,
+    "stock": 30,
+    "return_window_days": 14,
+    "description": "400 thread count 100% GOTS certified organic cotton bed sheets."
+  },
+  {
+    "product_id": "PROD-106",
+    "product_name": "Mechanical Gaming Keyboard RGB",
+    "category": "Electronics",
+    "price": 89.99,
+    "stock": 55,
+    "return_window_days": 14,
+    "description": "Custom tactile mechanical switches with per-key RGB backlighting."
+  },
+  {
+    "product_id": "PROD-107",
+    "product_name": "Cold Brew Coffee Maker Pitcher 1.5L",
+    "category": "Home & Kitchen",
+    "price": 34.50,
+    "stock": 60,
+    "return_window_days": 14,
+    "description": "Heavy duty glass carafe with fine mesh stainless steel filter."
+  },
+  {
+    "product_id": "PROD-108",
+    "product_name": "Ultra-Wide Gaming Monitor 34-inch",
+    "category": "Electronics",
+    "price": 499.99,
+    "stock": 8,
+    "return_window_days": 14,
+    "description": "144Hz curved QHD display with HDR400 and AMD FreeSync."
+  },
+  {
+    "product_id": "PROD-109",
+    "product_name": "Leather Bifold Slim Wallet",
+    "category": "Accessories",
+    "price": 39.00,
+    "stock": 85,
+    "return_window_days": 14,
+    "description": "Genuine full-grain RFID blocking leather wallet."
+  },
+  {
+    "product_id": "PROD-110",
+    "product_name": "Portable Bluetooth Speaker Waterproof",
+    "category": "Electronics",
+    "price": 59.99,
+    "stock": 40,
+    "return_window_days": 14,
+    "description": "IPX7 waterproof outdoor speaker with deep bass and 15h battery."
+  },
+  {
+    "product_id": "PROD-111",
+    "product_name": "Professional Chef Knife 8-inch",
+    "category": "Home & Kitchen",
+    "price": 69.95,
+    "stock": 22,
+    "return_window_days": 14,
+    "description": "High-carbon German steel kitchen knife with razor-sharp edge."
+  },
+  {
+    "product_id": "PROD-112",
+    "product_name": "Yoga Mat Extra Thick Eco-Friendly",
+    "category": "Fitness",
+    "price": 29.99,
+    "stock": 70,
+    "return_window_days": 14,
+    "description": "Non-slip TPE material 1/4-inch cushion yoga and workout mat."
+  },
+  {
+    "product_id": "PROD-113",
+    "product_name": "Custom Engraved Wood Desk Organizer",
+    "category": "Custom Goods",
+    "price": 45.00,
+    "stock": 15,
+    "return_window_days": 0,
+    "description": "Personalized wooden desk stand. Note: Customized items are non-returnable."
+  },
+  {
+    "product_id": "PROD-114",
+    "product_name": "Wireless Charging Pad Dual 15W",
+    "category": "Electronics",
+    "price": 32.99,
+    "stock": 95,
+    "return_window_days": 14,
+    "description": "Fast QI wireless charger for two phones simultaneously."
+  },
+  {
+    "product_id": "PROD-115",
+    "product_name": "Aromatherapy Essential Oil Diffuser 500ml",
+    "category": "Home & Living",
+    "price": 27.99,
+    "stock": 50,
+    "return_window_days": 14,
+    "description": "Ultrasonic cool mist humidifier with 7 ambient LED lights."
+  }
+]

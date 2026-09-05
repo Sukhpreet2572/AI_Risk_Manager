@@ -1,0 +1,122 @@
+[
+  {
+    "customer_id": "CUST-1001",
+    "name": "Rahul Sharma",
+    "email": "rahul.sharma@example.com",
+    "phone": "+1-555-0147",
+    "address": "742 Evergreen Terrace, Springfield, OR 97477",
+    "order_ids": ["ORD-2400321", "ORD-2400330"]
+  },
+  {
+    "customer_id": "CUST-1002",
+    "name": "Sarah Jenkins",
+    "email": "sarah.j@example.com",
+    "phone": "+1-555-0198",
+    "address": "124 Conch Street, Bikini Bottom, WA 98001",
+    "order_ids": ["ORD-2400322"]
+  },
+  {
+    "customer_id": "CUST-1003",
+    "name": "Michael Chen",
+    "email": "mchen@example.com",
+    "phone": "+1-555-0122",
+    "address": "42 Wallaby Way, Sydney, CA 90210",
+    "order_ids": ["ORD-2400323", "ORD-2400331"]
+  },
+  {
+    "customer_id": "CUST-1004",
+    "name": "Priya Patel",
+    "email": "priya.p@example.com",
+    "phone": "+1-555-0165",
+    "address": "100 Maple Avenue, Austin, TX 78701",
+    "order_ids": ["ORD-2400324"]
+  },
+  {
+    "customer_id": "CUST-1005",
+    "name": "David Miller",
+    "email": "dmiller@example.com",
+    "phone": "+1-555-0183",
+    "address": "555 Pine Street, Seattle, WA 98101",
+    "order_ids": ["ORD-2400325", "ORD-2400332"]
+  },
+  {
+    "customer_id": "CUST-1006",
+    "name": "Emily Watson",
+    "email": "ewatson@example.com",
+    "phone": "+1-555-0111",
+    "address": "88 Ocean Drive, Miami, FL 33139",
+    "order_ids": ["ORD-2400326"]
+  },
+  {
+    "customer_id": "CUST-1007",
+    "name": "James Wilson",
+    "email": "jwilson@example.com",
+    "phone": "+1-555-0177",
+    "address": "300 Lakeview Blvd, Chicago, IL 60601",
+    "order_ids": ["ORD-2400327"]
+  },
+  {
+    "customer_id": "CUST-1008",
+    "name": "Anita Gupta",
+    "email": "agupta@example.com",
+    "phone": "+1-555-0155",
+    "address": "15 Broadway Street, New York, NY 10001",
+    "order_ids": ["ORD-2400328"]
+  },
+  {
+    "customer_id": "CUST-1009",
+    "name": "Carlos Rodriguez",
+    "email": "crodriguez@example.com",
+    "phone": "+1-555-0134",
+    "address": "77 Sunset Blvd, Los Angeles, CA 90028",
+    "order_ids": ["ORD-2400329"]
+  },
+  {
+    "customer_id": "CUST-1010",
+    "name": "Jessica Taylor",
+    "email": "jtaylor@example.com",
+    "phone": "+1-555-0188",
+    "address": "50 Mountain View Rd, Denver, CO 80202",
+    "order_ids": ["ORD-2400333"]
+  },
+  {
+    "customer_id": "CUST-1011",
+    "name": "Vikram Singh",
+    "email": "vsingh@example.com",
+    "phone": "+1-555-0129",
+    "address": "12 Tech Park Way, San Jose, CA 95110",
+    "order_ids": ["ORD-2400334"]
+  },
+  {
+    "customer_id": "CUST-1012",
+    "name": "Amanda White",
+    "email": "awhite@example.com",
+    "phone": "+1-555-0162",
+    "address": "404 Main Street, Boston, MA 02108",
+    "order_ids": ["ORD-2400335"]
+  },
+  {
+    "customer_id": "CUST-1013",
+    "name": "Kevin Brown",
+    "email": "kbrown@example.com",
+    "phone": "+1-555-0144",
+    "address": "90 Peachtree St, Atlanta, GA 30303",
+    "order_ids": ["ORD-2400336"]
+  },
+  {
+    "customer_id": "CUST-1014",
+    "name": "Rachel Adams",
+    "email": "radams@example.com",
+    "phone": "+1-555-0199",
+    "address": "22 River Road, Portland, OR 97201",
+    "order_ids": ["ORD-2400337"]
+  },
+  {
+    "customer_id": "CUST-1015",
+    "name": "Daniel Kim",
+    "email": "dkim@example.com",
+    "phone": "+1-555-0105",
+    "address": "101 Silicon Way, San Francisco, CA 94105",
+    "order_ids": ["ORD-2400338"]
+  }
+]

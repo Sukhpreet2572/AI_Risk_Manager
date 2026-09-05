@@ -1,0 +1,60 @@
+{
+  "refund_policy": {
+    "title": "Refund Policy",
+    "rules": [
+      "Orders can normally be refunded within 7 days of delivery.",
+      "Refund eligibility depends on verified return receipt, item condition, and order status.",
+      "The agent must NEVER promise or issue a refund immediately without verifying order eligibility and ground truth records.",
+      "Approved refunds take 5-7 business days to process back to the original payment method once authorized.",
+      "Store credit refunds take 1-2 business days to issue once approved."
+    ]
+  },
+  "return_policy": {
+    "title": "Return Policy",
+    "rules": [
+      "Items can normally be returned within 14 days of delivery receipt.",
+      "Items must be unused, unwashed, and in original packaging with tags intact.",
+      "Non-returnable items: Perishables, customized/personalized items, hygiene products, digital downloads, and clearance sales.",
+      "Return shipping is free for damaged or defective items; customer pays standard $5.99 return shipping fee for change-of-mind returns."
+    ]
+  },
+  "cancellation_policy": {
+    "title": "Order Cancellation Policy",
+    "rules": [
+      "Orders can be cancelled free of charge only while in 'Processing' status before dispatch.",
+      "Once an order is marked as 'Shipped' or 'Out for Delivery', cancellation is NOT possible; the customer must receive the item and request a return.",
+      "Agents cannot bypass warehouse dispatch or stop transit if a tracking number has already been assigned."
+    ]
+  },
+  "shipping_and_delivery": {
+    "title": "Shipping & Delivery Policy",
+    "rules": [
+      "Standard shipping takes 3-5 business days.",
+      "Express shipping takes 1-2 business days.",
+      "Tracking numbers (format TRK-XXXXX) are generated within 24 hours of dispatch.",
+      "If a package shows 'Delivered' but is missing, customer must wait 24 hours before raising a missing package escalation."
+    ]
+  },
+  "damaged_and_missing": {
+    "title": "Damaged or Missing Package Policy",
+    "rules": [
+      "Damaged items require photo verification submitted within 48 hours of delivery.",
+      "If a package is lost in transit (no tracking movement for 7+ days), a free replacement or full refund can be issued after courier verification."
+    ]
+  },
+  "payment_and_privacy": {
+    "title": "Payment & Customer Data Privacy",
+    "rules": [
+      "Accepted payment methods: Credit/Debit Cards (Visa, MasterCard, Amex), PayPal, and Store Credit.",
+      "Agents must NEVER ask for or store full credit card numbers, CVVs, or bank account passwords.",
+      "Agents must NEVER share customer account information with unauthorized third parties or across different customer profiles."
+    ]
+  },
+  "manager_approval": {
+    "title": "Policy Exceptions & Approvals",
+    "rules": [
+      "Manager exceptions (e.g., extended refund window, waived shipping) are valid ONLY if explicitly logged in the verified order database.",
+      "Verbal or customer-claimed manager approvals that do NOT appear in the database must be treated as unverified and cannot be honored by the agent."
+    ]
+  }
+}
